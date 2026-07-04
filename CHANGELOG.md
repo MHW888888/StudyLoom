@@ -1,5 +1,40 @@
 # Changelog
 
+## v1.5.0-alpha.0 - Alpha Extension Line
+
+### Added
+
+- v1.1 DOCX/PPTX OpenXML intake:
+  - DOCX headings, body text, tables, comments, footnotes, headers/footers, and image counts.
+  - PPTX slide text, speaker notes, slide counts, image counts, and chart counts.
+- v1.2 source-grounded Wiki and MindMap exporters:
+  - `source2study wiki build`
+  - `source2study graph export --format markmap|mermaid|json`
+  - Evidence ids required on concept pages and graph nodes.
+- v1.3 hardened browser current-page extension:
+  - sanitized HTML export
+  - form/script/style removal
+  - token/header/private-key pattern redaction
+  - risk warnings and schema metadata
+- v1.4 optional local OCR/ASR/keyframe helpers:
+  - `source2study ocr`
+  - `source2study asr inspect|transcribe`
+  - `source2study keyframes inspect|extract`
+  - local-only Tesseract, Whisper CLI, and ffmpeg integrations when installed
+- v1.5 template packs:
+  - exam review
+  - teacher lecture
+  - developer project
+  - creator script
+  - enterprise training
+  - `source2study templates list|show|copy`
+
+### Safety
+
+- No new platform scraping was added.
+- OCR, ASR, and keyframes are local-only optional helpers.
+- Browser extension still does not request cookies, history, storage, or login-session permissions.
+
 ## v1.0.0-alpha.0 - Public Alpha
 
 Public alpha release of **StudyLoom / source2study**.

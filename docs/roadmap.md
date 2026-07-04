@@ -106,13 +106,14 @@ Source Fidelity -> Evidence Quality -> Citation Grounding -> Learning Quality ->
 
 Current v1.0 alpha packages the pre-alpha work into a release-ready GitHub project.
 
-## Next Milestones
+## Completed Alpha Extensions
 
 ### v1.1 DOCX / PPTX Real Extraction
 
 - Real DOCX heading/body/table/image/comment extraction
 - Real PPTX slide/title/body/image/speaker-note extraction
 - Source fidelity reports for complex layouts
+- Conservative OpenXML parser without mandatory external dependencies
 
 ### v1.2 Wiki And MindMap Extension
 
@@ -121,19 +122,13 @@ Current v1.0 alpha packages the pre-alpha work into a release-ready GitHub proje
 - Evidence IDs on wiki pages and mind-map nodes
 - No Wikipedia crawling or unsupported generated knowledge
 
-### v1.2.x Richer PDF / Typst / Pandoc Export
-
-- Better Chinese PDF path
-- Optional Pandoc or Typst workflow
-- Rich citation and evidence cards
-- Layout QA guidance
-
 ### v1.3 Browser Extension Hardening
 
 - Current-page capture UX
 - Better DOM cleanup
 - Image capture metadata
 - No cookies, storage, headers, or bulk history
+- Redaction and risk warnings for common credential-like patterns
 
 ### v1.4 Optional Local ASR / OCR Pipeline
 
@@ -141,6 +136,8 @@ Current v1.0 alpha packages the pre-alpha work into a release-ready GitHub proje
 - Optional OCR engine integrations
 - Confidence tracking
 - Keyframe and screenshot evidence cards
+- Local-only ffmpeg keyframe helper
+- No platform video download
 
 ### v1.5 Template Marketplace / Template Packs
 
@@ -148,8 +145,31 @@ Current v1.0 alpha packages the pre-alpha work into a release-ready GitHub proje
 - Exam review pack
 - Creator script pack
 - Teacher handout pack
-- Research paper deep-read pack
 - Enterprise training pack
+- Template pack CLI list/show/copy
+
+## Future Milestones
+
+### v1.6 Richer PDF / Typst / Pandoc Export
+
+- Better Chinese PDF path
+- Optional Pandoc or Typst workflow
+- Rich citation and evidence cards
+- Layout QA guidance
+
+### v1.7 Deeper Complex PDF And Office Fidelity
+
+- Scanned PDF OCR integration
+- Table structure recovery
+- PPT chart data extraction
+- DOCX tracked-change modeling
+
+### v1.8 Optional Video Learning Pipeline
+
+- Scene-change and slide-change detection
+- Keyframe OCR into EvidenceIndex
+- ASR segment alignment
+- Low-confidence ASR/OCR review workflow
 
 ### v2.0 Hosted Or Team Workflows
 

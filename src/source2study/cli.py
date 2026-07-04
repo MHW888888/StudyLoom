@@ -19,11 +19,14 @@ from source2study.adapters.webpage_adapter import WebpageAdapter
 from source2study.adapters.wechat_html_adapter import WeChatHtmlAdapter
 from source2study.adapters.xhs_export_adapter import XhsExportAdapter
 from source2study.adapters.zhihu_html_adapter import ZhihuHtmlAdapter
+from source2study.asr.local import inspect_local_asr, run_local_asr
 from source2study.cache import CacheStore, cache_key
 from source2study.config import SourcePolicy
 from source2study.exporters.docx import write_docx
+from source2study.exporters.mindmap import export_mindmap, validate_mindmap_text
 from source2study.exporters.markdown import write_markdown
 from source2study.exporters.pdf import write_pdf
+from source2study.exporters.wiki import validate_wiki, write_wiki
 from source2study.generation.citation_verifier import CitationVerifier
 from source2study.generation.learning_quality_verifier import LearningQualityVerifier
 from source2study.generation.modes import resolve_mode
@@ -48,9 +51,12 @@ from source2study.manifest import (
     write_manifest,
 )
 from source2study.models.study_pack import StudyPack
+from source2study.ocr.simple_placeholder import read_sidecar_or_placeholder
 from source2study.personalization.learner_profile import LearnerProfile, default_profile
 from source2study.personalization.pack_spec import LearningPackSpecBuilder
 from source2study.safety.policy import PolicyEngine
+from source2study.templates import copy_all_template_packs, copy_template_pack, list_template_packs, load_template_pack
+from source2study.video.keyframes import extract_interval_keyframes, inspect_keyframe_engine
 from source2study.workspace import (
     citation_report_path,
     ensure_workspace,
@@ -130,6 +136,50 @@ def build_parser() -> argparse.ArgumentParser:
     policy_check.add_argument("source")
     policy_check.add_argument("--allow-network", action="store_true")
 
+    wiki = sub.add_parser("wiki", help="build source-grounded wiki exports")
+    wiki_sub = wiki.add_subparsers(dest="wiki_command", required=True)
+    wiki_build = wiki_sub.add_parser("build", help="build a personal learning wiki from EvidenceIndex")
+    wiki_build.add_argument("workspace")
+    wiki_build.add_argument("--output-dir")
+
+    graph = sub.add_parser("graph", help="export source-grounded concept maps")
+    graph_sub = graph.add_subparsers(dest="graph_command", required=True)
+    graph_export = graph_sub.add_parser("export", help="export ConceptGraph as markmap, mermaid, or json")
+    graph_export.add_argument("workspace")
+    graph_export.add_argument("--format", choices=["markmap", "mermaid", "json"], default="markmap")
+    graph_export.add_argument("--output")
+
+    ocr = sub.add_parser("ocr", help="run optional local OCR for a user-provided image")
+    ocr.add_argument("image")
+    ocr.add_argument("--output", help="write OCR text to this sidecar file")
+
+    asr = sub.add_parser("asr", help="inspect or run optional local ASR for user-provided media")
+    asr_sub = asr.add_subparsers(dest="asr_command", required=True)
+    asr_inspect = asr_sub.add_parser("inspect", help="check whether local ASR is available")
+    asr_inspect.add_argument("media", nargs="?")
+    asr_transcribe = asr_sub.add_parser("transcribe", help="transcribe local media with an installed local ASR engine")
+    asr_transcribe.add_argument("media")
+    asr_transcribe.add_argument("--output", help="write transcript text to this file")
+
+    keyframes = sub.add_parser("keyframes", help="inspect or extract local video keyframes with optional ffmpeg")
+    keyframes_sub = keyframes.add_subparsers(dest="keyframes_command", required=True)
+    keyframes_inspect = keyframes_sub.add_parser("inspect", help="check whether local keyframe extraction is available")
+    keyframes_inspect.add_argument("video", nargs="?")
+    keyframes_extract = keyframes_sub.add_parser("extract", help="extract interval keyframes from a local video")
+    keyframes_extract.add_argument("video")
+    keyframes_extract.add_argument("--output-dir", required=True)
+    keyframes_extract.add_argument("--interval-seconds", type=int, default=30)
+
+    templates = sub.add_parser("templates", help="list, show, or copy learning template packs")
+    templates_sub = templates.add_subparsers(dest="templates_command", required=True)
+    templates_sub.add_parser("list", help="list available template packs")
+    templates_show = templates_sub.add_parser("show", help="show one template pack")
+    templates_show.add_argument("template_id")
+    templates_copy = templates_sub.add_parser("copy", help="copy a template pack into a workspace")
+    templates_copy.add_argument("template_id", help="template id or 'all'")
+    templates_copy.add_argument("--workspace", required=True)
+    templates_copy.add_argument("--output-dir")
+
     return parser
 
 
@@ -148,6 +198,18 @@ def main(argv: list[str] | None = None) -> int:
             return cmd_validate(args)
         if args.command == "policy":
             return cmd_policy(args)
+        if args.command == "wiki":
+            return cmd_wiki(args)
+        if args.command == "graph":
+            return cmd_graph(args)
+        if args.command == "ocr":
+            return cmd_ocr(args)
+        if args.command == "asr":
+            return cmd_asr(args)
+        if args.command == "templates":
+            return cmd_templates(args)
+        if args.command == "keyframes":
+            return cmd_keyframes(args)
     except (AdapterError, ValueError, PermissionError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         fallback = getattr(exc, "fallback", None)
@@ -375,6 +437,108 @@ def cmd_policy(args) -> int:
     decision = PolicyEngine().check_source(args.source, SourcePolicy(allow_network=args.allow_network))
     print(json.dumps(decision.to_dict(), ensure_ascii=False, indent=2))
     return 0 if decision.allowed else 1
+
+
+def cmd_wiki(args) -> int:
+    if args.wiki_command != "build":
+        raise ValueError(f"Unsupported wiki command: {args.wiki_command}")
+    workspace = ensure_workspace(Path(args.workspace))
+    index = load_index(workspace)
+    if not index.evidence:
+        raise ValueError("Cannot build wiki: EvidenceIndex is empty.")
+    output_dir = Path(args.output_dir) if args.output_dir else workspace / "wiki"
+    written = write_wiki(index, output_dir)
+    validation = validate_wiki(written, index)
+    print(json.dumps({"status": validation["status"], "wiki": str(written), "issues": validation["issues"]}, ensure_ascii=False, indent=2))
+    return 0 if validation["status"] == "pass" else 1
+
+
+def cmd_graph(args) -> int:
+    if args.graph_command != "export":
+        raise ValueError(f"Unsupported graph command: {args.graph_command}")
+    workspace = ensure_workspace(Path(args.workspace))
+    index = load_index(workspace)
+    if not index.evidence:
+        raise ValueError("Cannot export graph: EvidenceIndex is empty.")
+    extension = {"markmap": "md", "mermaid": "mmd", "json": "json"}[args.format]
+    output = Path(args.output) if args.output else workspace / "visuals" / f"concept_graph.{extension}"
+    written = export_mindmap(index, output, args.format)
+    validation = validate_mindmap_text(written.read_text(encoding="utf-8"))
+    print(json.dumps({"status": validation["status"], "graph": str(written), "format": args.format, "issues": validation["issues"]}, ensure_ascii=False, indent=2))
+    return 0 if validation["status"] == "pass" else 1
+
+
+def cmd_ocr(args) -> int:
+    image = Path(args.image)
+    if not image.exists() or not image.is_file():
+        raise ValueError(f"OCR image does not exist: {image}")
+    result = read_sidecar_or_placeholder(image)
+    if args.output:
+        Path(args.output).parent.mkdir(parents=True, exist_ok=True)
+        Path(args.output).write_text(result.text, encoding="utf-8")
+    print(json.dumps({"status": "pass" if result.text else "fail", "engine": result.engine, "confidence": result.confidence, "output": args.output, "text_preview": result.text[:200]}, ensure_ascii=False, indent=2))
+    return 0
+
+
+def cmd_asr(args) -> int:
+    if args.asr_command == "inspect":
+        payload = inspect_local_asr()
+        if getattr(args, "media", None):
+            media = Path(args.media)
+            payload["media_exists"] = media.exists() and media.is_file()
+            payload["media"] = str(media)
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        return 0
+    if args.asr_command != "transcribe":
+        raise ValueError(f"Unsupported asr command: {args.asr_command}")
+    media = Path(args.media)
+    if not media.exists() or not media.is_file():
+        raise ValueError(f"ASR media file does not exist: {media}")
+    result = run_local_asr(media)
+    if args.output and result.text:
+        Path(args.output).parent.mkdir(parents=True, exist_ok=True)
+        Path(args.output).write_text(result.text, encoding="utf-8")
+    print(json.dumps(result.to_dict() | {"output": args.output}, ensure_ascii=False, indent=2))
+    return 0 if result.status == "pass" else 1
+
+
+def cmd_templates(args) -> int:
+    if args.templates_command == "list":
+        packs = list_template_packs()
+        print(json.dumps({"count": len(packs), "templates": packs}, ensure_ascii=False, indent=2))
+        return 0
+    if args.templates_command == "show":
+        print(json.dumps(load_template_pack(args.template_id), ensure_ascii=False, indent=2))
+        return 0
+    if args.templates_command != "copy":
+        raise ValueError(f"Unsupported templates command: {args.templates_command}")
+    workspace = ensure_workspace(Path(args.workspace))
+    output_dir = Path(args.output_dir) if args.output_dir else None
+    if args.template_id == "all":
+        written = copy_all_template_packs(workspace, output_dir)
+    else:
+        written = copy_template_pack(args.template_id, workspace, output_dir)
+    print(json.dumps({"status": "pass", "path": str(written)}, ensure_ascii=False, indent=2))
+    return 0
+
+
+def cmd_keyframes(args) -> int:
+    if args.keyframes_command == "inspect":
+        payload = inspect_keyframe_engine()
+        if getattr(args, "video", None):
+            video = Path(args.video)
+            payload["video_exists"] = video.exists() and video.is_file()
+            payload["video"] = str(video)
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        return 0
+    if args.keyframes_command != "extract":
+        raise ValueError(f"Unsupported keyframes command: {args.keyframes_command}")
+    video = Path(args.video)
+    if not video.exists() or not video.is_file():
+        raise ValueError(f"Video file does not exist: {video}")
+    result = extract_interval_keyframes(video, Path(args.output_dir), args.interval_seconds)
+    print(json.dumps(result.to_dict(), ensure_ascii=False, indent=2))
+    return 0 if result.status == "pass" else 1
 
 
 def _resolve_profile(args) -> LearnerProfile:

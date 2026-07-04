@@ -1,0 +1,10 @@
+{
+  "id": "teacher-lecture",
+  "name": "Teacher Lecture Pack",
+  "description": "Create classroom-ready notes with lesson goals, teaching sequence, activities, homework, and assessment prompts.",
+  "use_case": "teacher",
+  "mode": "teacher",
+  "required_blocks": ["opening_hook", "learning_map", "concept_card", "quiz_block", "practice_task", "source_appendix"],
+  "output_bias": ["lesson_objectives", "blackboard_outline", "classroom_activity", "homework_prompt"],
+  "safety_notes": ["Disclose degraded source extraction before teaching.", "Use source appendix for auditability."]
+}

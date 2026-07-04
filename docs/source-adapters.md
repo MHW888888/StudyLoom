@@ -39,19 +39,20 @@ fallback_options(source)
 | Adapter | Status | Notes |
 |---|---|---|
 | PDF/text/Markdown | Implemented | PDF requires optional `pypdf`; text/Markdown work without dependencies. |
-| DOCX/Word (`DocxAdapter`) | Planned placeholder | Must eventually preserve headings, body text, tables, images, comments, footnotes, headers, and footers. Default ingest is blocked until structure can be reported safely. |
-| PPTX/slides (`PptxAdapter`) | Planned placeholder | Must eventually preserve slide order, titles, body text, images, charts, speaker notes, and relevant animation/order hints. Default ingest is blocked until structure can be reported safely. |
+| DOCX/Word (`DocxAdapter`) | Implemented in v1.1 | Extracts headings, body text, tables, comments, footnotes, headers/footers, and image counts. Complex layout and image pixels are warning-only. |
+| PPTX/slides (`PptxAdapter`) | Implemented in v1.1 | Extracts slide text, speaker notes, slide counts, image counts, and chart counts. Chart data and animation order are warning-only. |
 | Local GitHub-style directory | Implemented | Reads README, docs, examples, tests, manifests, and small text files. |
 | Public GitHub URL | Implemented behind `--allow-network` | Uses shallow `git clone`; no tokens are passed. |
 | Webpage | Implemented behind `--allow-network` or local HTML | Basic HTML text extraction only. |
-| Local video/audio transcript | Implemented | Requires `.vtt`, `.srt`, or `.txt` transcript; no ASR yet. |
+| Local video/audio transcript | Implemented | Requires `.vtt`, `.srt`, or `.txt` transcript; optional local Whisper CLI ASR is available behind explicit command. |
 | Bilibili URL | Blocked by design in MVP | User should provide subtitles, transcript, or local file. |
 | WeChat public article export | Implemented in v0.4 | Reads saved local WeChat-style HTML only; no direct crawling. |
 | Xiaohongshu export | Implemented in v0.4 | Reads saved Markdown/JSON exports; no media download. |
 | Zhihu public page export | Implemented in v0.4 | Reads saved local Zhihu-style HTML only; no signature bypass. |
 | Browser capture | Implemented in v0.4 | Reads local current-page JSON; rejects cookies, headers, tokens, storage, and bulk captures. |
-| Screenshot/OCR | Implemented in v0.4 | Reads local image and optional `.ocr.txt` sidecar; records `ocr_confidence`. |
+| Screenshot/OCR | Implemented in v0.4; enhanced in v1.4 | Reads local image and optional `.ocr.txt` sidecar; can try local Tesseract when installed; records `ocr_confidence`. |
 | Transcript import | Implemented in v0.4 | Reads user-uploaded `.srt`, `.vtt`, or explicit transcript `.txt`; no video download. |
+| Local keyframes | Implemented in v1.4 | Optional local ffmpeg interval keyframe extraction; no platform video download. |
 
 See `docs/source-capability-matrix.md` for the full staged matrix.
 

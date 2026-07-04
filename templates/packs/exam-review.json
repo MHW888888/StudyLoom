@@ -1,0 +1,10 @@
+{
+  "id": "exam-review",
+  "name": "Exam Review Pack",
+  "description": "Generate exam or interview review sheets with definitions, traps, retrieval practice, and source appendix.",
+  "use_case": "exam",
+  "mode": "exam",
+  "required_blocks": ["learning_map", "concept_card", "misconception_box", "quiz_block", "one_page_review", "source_appendix"],
+  "output_bias": ["definitions", "formula_or_rule_cards", "common_traps", "short_answer_prompts"],
+  "safety_notes": ["Do not invent exam facts without evidence ids.", "Keep long source quotations out of public-share outputs."]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "creator-script",
+  "name": "Creator Script Pack",
+  "description": "Convert source-grounded learning material into a creator-friendly explanation script and post outline.",
+  "use_case": "creator",
+  "mode": "creator",
+  "required_blocks": ["opening_hook", "learning_map", "concept_card", "misconception_box", "evidence_card", "source_appendix"],
+  "output_bias": ["hook", "story_arc", "visual_beats", "caption_outline"],
+  "safety_notes": ["Do not redistribute copyrighted source text.", "Keep screenshots and excerpts limited for public sharing."]
+}

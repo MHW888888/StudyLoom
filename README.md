@@ -40,13 +40,8 @@ source2study ingest \
   --source ./examples/demo_sources/lecture.vtt
 
 source2study build-index ./workspace/demo
-
-source2study generate ./workspace/demo \
-  --mode beginner \
-  --output ./workspace/demo/outputs/beginner.md
-
-source2study validate ./workspace/demo \
-  --pack ./workspace/demo/outputs/study_pack_beginner_full.json
+source2study generate ./workspace/demo --mode beginner --output ./workspace/demo/outputs/beginner.md
+source2study validate ./workspace/demo --pack ./workspace/demo/outputs/study_pack_beginner_full.json
 ```
 
 Open:
@@ -63,6 +58,7 @@ Many tools summarize one video or transcript. StudyLoom is designed for a differ
 - inspect user-provided materials before generation
 - preserve evidence with source, location, confidence, and rights metadata
 - generate different learning packs for different users and goals
+- export optional source-grounded wiki and concept-map views
 - verify citation grounding and learning quality
 - keep agent/MCP tools restricted and auditable
 
@@ -100,8 +96,6 @@ source2study build-index ./workspace/low-risk-demo
 source2study generate ./workspace/low-risk-demo --mode beginner --output ./workspace/low-risk-demo/outputs/beginner.md
 ```
 
-This demo may produce low-confidence OCR warnings. That is expected: low-confidence evidence must be disclosed instead of treated as a strong fact.
-
 ### Personalized Learning Pack Demo
 
 ```bash
@@ -122,7 +116,24 @@ python evals/run_eval.py --suite personalized_demo
 python evals/run_eval.py --suite degraded_demo
 ```
 
-The eval baseline checks source fidelity, evidence quality, citation grounding, learning quality, output fit, and policy compliance.
+### Wiki / MindMap Demo
+
+```bash
+source2study wiki build ./workspace/standard-demo
+source2study graph export ./workspace/standard-demo --format markmap
+source2study graph export ./workspace/standard-demo --format mermaid
+source2study graph export ./workspace/standard-demo --format json
+```
+
+These exports are optional views over `EvidenceIndex` and `ConceptGraph`. They do not crawl Wikipedia or invent source-free wiki content.
+
+### Template Pack Demo
+
+```bash
+source2study templates list
+source2study templates show developer-project
+source2study templates copy all --workspace ./workspace/standard-demo
+```
 
 ## Example Outputs
 
@@ -144,6 +155,8 @@ Curated small samples live in [examples/outputs](examples/outputs):
 |---|---|---|
 | Markdown/text | local file | supported |
 | PDF | local file, basic text extraction | supported with optional `pypdf` |
+| DOCX | local user-provided `.docx` | supported, OpenXML text/table/comment extraction |
+| PPTX | local user-provided `.pptx` | supported, OpenXML slide/speaker-note extraction |
 | local GitHub-style repo | local directory | supported |
 | ordinary webpage | explicit `--allow-network` only | cautious support |
 | saved WeChat HTML | user-saved local HTML | supported |
@@ -152,7 +165,6 @@ Curated small samples live in [examples/outputs](examples/outputs):
 | browser capture | current-page JSON export | supported |
 | screenshot OCR | image plus optional `.ocr.txt` sidecar | supported, confidence labeled |
 | transcript/subtitle | `.srt`, `.vtt`, `.txt` | supported |
-| DOCX/PPTX | planned placeholder contracts | planned real extraction |
 | Bilibili/YouTube video | user-provided transcript/screenshot only | direct download blocked by default |
 | paid course platforms | user-authorized local exports only | no bypass |
 
@@ -168,8 +180,6 @@ See [docs/source-capability-matrix.md](docs/source-capability-matrix.md).
 - `teacher`: lecture notes, class plan, assignment ideas
 - `research`: research-oriented definitions, tensions, and extension reading
 
-The same source can produce different packs because the generator uses `LearnerProfile`, `ConceptGraph`, and `LearningPackSpec`.
-
 ## CLI Overview
 
 ```text
@@ -179,6 +189,14 @@ source2study build-index WORKSPACE [--allow-degraded]
 source2study generate WORKSPACE --mode MODE --output PATH [--profile PROFILE_JSON] [--goal GOAL] [--level LEVEL] [--time-budget TIME] [--use-case USE_CASE] [--style STYLE] [--share-mode personal|public_share] [--allow-degraded]
 source2study validate WORKSPACE [--pack PACK_JSON] [--share-mode personal|public_share]
 source2study policy check SOURCE [--allow-network]
+source2study wiki build WORKSPACE [--output-dir DIR]
+source2study graph export WORKSPACE --format markmap|mermaid|json [--output PATH]
+source2study ocr IMAGE [--output OCR_TXT]
+source2study asr inspect [MEDIA]
+source2study asr transcribe MEDIA [--output TRANSCRIPT_TXT]
+source2study keyframes inspect [VIDEO]
+source2study keyframes extract VIDEO --output-dir DIR [--interval-seconds N]
+source2study templates list|show|copy
 ```
 
 ## MCP / Agent Tools
@@ -234,15 +252,11 @@ See [docs/compliance.md](docs/compliance.md) and [SECURITY.md](SECURITY.md).
 
 ## Installation Notes
 
-### Local Development
-
 ```bash
 python -m venv .venv
 .venv\Scripts\activate
 pip install -e .
 ```
-
-### Windows Paths
 
 Use quoted paths when directories contain spaces:
 
@@ -250,7 +264,7 @@ Use quoted paths when directories contain spaces:
 source2study inspect "C:\Users\you\Documents\lesson notes.md" --workspace ".\workspace\demo"
 ```
 
-### Clean Runtime Files
+Clean runtime files:
 
 ```powershell
 Remove-Item -Recurse -Force .\workspace, .\tmp, .\.source2study -ErrorAction SilentlyContinue
@@ -258,26 +272,26 @@ Remove-Item -Recurse -Force .\workspace, .\tmp, .\.source2study -ErrorAction Sil
 
 Do not commit runtime workspaces or caches.
 
-### PDF Boundary
-
-Markdown is the canonical output. The current PDF exporter is a basic smoke renderer and writes a Markdown sidecar first. Production-grade Chinese PDF layout, fonts, and richer print design are future work. See [docs/pdf-export.md](docs/pdf-export.md).
-
 ## Project Structure
 
 ```text
 src/source2study/
   adapters/          source-specific low-risk import paths
+  asr/               optional local ASR helpers
   models/            source, evidence, intake, and study-pack data models
   indexing/          EvidenceIndex and chunking
   personalization/   LearnerProfile and LearningPackSpec
   knowledge/         rule-based ConceptGraph
   generation/        writers, citation verifier, learning-quality verifier
-  exporters/         Markdown, DOCX, basic PDF
+  exporters/         Markdown, DOCX, basic PDF, wiki, and mindmap
+  ocr/               sidecar/Tesseract/placeholder OCR helpers
   safety/            policy, permissions, redaction
+  video/             optional local keyframe helpers
 mcp/                 restricted MCP tool schemas and server
 evals/               deterministic benchmark suites
 examples/            demo sources, profiles, and curated outputs
 skills/              Codex and Claude skill packages
+templates/           blocks, personas, exporter settings, and template packs
 docs/                architecture, compliance, source fidelity, roadmap
 ```
 
@@ -289,25 +303,25 @@ New adapters must include a capability matrix entry, policy rule, fixture, tests
 
 ## Known Limitations
 
-- DOCX/PPTX real structural extraction is planned but not fully implemented.
-- Wiki/MindMap export is planned for a later extension, not part of v1.0.
+- DOCX/PPTX extraction is OpenXML-based and conservative; complex layouts, charts, tracked changes, and image pixels are not fully reconstructed.
+- Wiki/MindMap export is source-grounded but still a navigation layer, not a replacement for the evidence ledger.
 - PDF export is basic; Markdown is the canonical source.
-- OCR is currently a lightweight sidecar/placeholder path unless optional engines are added later.
-- ASR and video keyframe extraction are not default behavior.
+- OCR is local and optional: sidecar text first, local Tesseract if available, then low-confidence placeholder.
+- ASR is local and optional through an installed `whisper` CLI; keyframes are local and optional through an installed `ffmpeg` CLI.
 - Direct Bilibili/YouTube/Xiaohongshu/WeChat/Zhihu crawling is not a default feature.
 - Eval metrics are deterministic rule checks, not a full human quality judgment.
 
 ## Roadmap
 
 - `v1.0`: Public Alpha release, tag, release notes, clean install test
-- `v1.1`: real DOCX/PPTX extraction
-- `v1.2`: source-grounded Wiki and MindMap extension
-- `v1.3`: browser extension hardening
-- `v1.4`: optional local OCR/ASR pipeline behind explicit permission
-- `v1.5`: template marketplace / template packs
+- `v1.1`: real DOCX/PPTX extraction - complete in this alpha line
+- `v1.2`: source-grounded Wiki and MindMap extension - complete in this alpha line
+- `v1.3`: browser extension hardening - complete in this alpha line
+- `v1.4`: optional local OCR/ASR pipeline behind explicit permission - complete in this alpha line
+- `v1.5`: template packs - complete in this alpha line
 - `v2.0`: hosted or team workflows
 
-Experimental platform adapters belong after `v1.0` and must keep the same low-risk, user-authorized boundaries.
+Experimental platform adapters must keep the same low-risk, user-authorized boundaries.
 
 ## License
 

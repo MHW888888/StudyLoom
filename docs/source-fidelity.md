@@ -19,13 +19,13 @@ Generation must only use material that entered `EvidenceIndex`. If source intake
 | Source | Intake must inspect | Current support |
 |---|---|---|
 | Markdown/text/PDF | text blocks, page availability, extraction warnings | Text and Markdown are supported; PDF text requires optional `pypdf`; images/tables/layout are not fully parsed yet. |
-| DOCX/Word | headings, body text, tables, images, comments, footnotes, headers/footers | Planned placeholder contract only. No silent DOCX extraction. |
-| PPTX/slides | slide count, titles, body text, images, charts, speaker notes, animation/order hints | Planned placeholder contract only. No silent PPTX extraction. |
+| DOCX/Word | headings, body text, tables, images, comments, footnotes, headers/footers | OpenXML extraction is supported; complex layout and image pixels produce warnings. |
+| PPTX/slides | slide count, titles, body text, images, charts, speaker notes, animation/order hints | OpenXML extraction is supported; chart data and animation order produce warnings. |
 | Webpage/HTML | title, readable body, links, images, extraction method | Local HTML and explicit public-page fetch are supported. |
 | Browser capture | title, URL, visible text/HTML, images, user-initiated capture | Current-page JSON is supported; cookies, headers, tokens, and bulk history are blocked. |
 | Transcript/subtitle | segments, timestamps, source file, missing video context | SRT/VTT/TXT transcript import is supported; video body is marked not processed. |
 | Screenshot/OCR | image path, OCR text, OCR confidence, visual evidence | Screenshot plus optional `.ocr.txt` sidecar is supported; placeholder OCR is low confidence. |
-| Video/course links | subtitles, ASR, keyframes, slide changes, OCR, timestamps | Direct video extraction remains blocked by default. User-provided transcripts/screenshots are the safe path. |
+| Video/course links | subtitles, ASR, keyframes, slide changes, OCR, timestamps | Direct video extraction remains blocked by default. User-provided transcripts/screenshots and optional local ASR/keyframes are the safe path. |
 
 ## Status Rules
 

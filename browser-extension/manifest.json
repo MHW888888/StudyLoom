@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Source2Study Current Page Export",
-  "version": "0.4.0",
-  "description": "Export only the currently visible page as Source2Study browser_capture JSON.",
+  "name": "StudyLoom Current Page Export",
+  "version": "1.3.0",
+  "description": "Export only the user-initiated current page as sanitized source2study browser_capture JSON.",
   "permissions": ["activeTab", "downloads"],
   "host_permissions": ["<all_urls>"],
   "action": {

@@ -1,0 +1,10 @@
+{
+  "id": "enterprise-training",
+  "name": "Enterprise Training Pack",
+  "description": "Organize internal training materials into role-based learning objectives, action checklists, and assessment items.",
+  "use_case": "enterprise_training",
+  "mode": "review",
+  "required_blocks": ["learning_map", "concept_card", "practice_task", "quiz_block", "one_page_review", "source_appendix"],
+  "output_bias": ["role_scenarios", "workflow_steps", "action_checklist", "manager_review_questions"],
+  "safety_notes": ["Do not expose private internal files in public outputs.", "Run redaction before sharing reports outside the workspace."]
+}

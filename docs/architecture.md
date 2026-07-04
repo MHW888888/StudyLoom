@@ -46,7 +46,8 @@ Every source should produce an `IntakeReport` that records detected assets, extr
 - `intake.py`: source fidelity reports, summaries, and intake quality gates.
 - `indexing/`: `EvidenceIndex` and lightweight retrieval.
 - `generation/`: deterministic first-pass pack writer and verifier.
-- `exporters/`: Markdown, minimal DOCX, and simple PDF.
+- `exporters/`: Markdown, minimal DOCX, simple PDF, wiki, and mindmap.
+- `ocr/`, `asr/`, `video/`: optional local OCR, ASR, and keyframe helpers.
 - `safety/`: redaction, permission checks, copyright-oriented output policy.
 - `cli.py`: user-facing local workflow.
 - `mcp/`: restricted agent tool wrappers around the CLI workflow; no shell, arbitrary paths, arbitrary URLs, cookies, login state, or platform bypasses.

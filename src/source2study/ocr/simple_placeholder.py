@@ -4,6 +4,7 @@ from pathlib import Path
 
 from source2study.adapters.utils import read_text_lossy
 from source2study.ocr.base import OcrResult
+from source2study.ocr.tesseract_adapter import run_tesseract_if_available
 
 
 def read_sidecar_or_placeholder(image_path: Path) -> OcrResult:
@@ -12,6 +13,9 @@ def read_sidecar_or_placeholder(image_path: Path) -> OcrResult:
             text = read_text_lossy(sidecar).strip()
             if text:
                 return OcrResult(text=text, confidence=0.75, engine="sidecar_text")
+    tesseract = run_tesseract_if_available(image_path)
+    if tesseract is not None:
+        return tesseract
     return OcrResult(
         text=f"OCR text is not available for {image_path.name}. Use this screenshot as low-confidence visual evidence only.",
         confidence=0.2,

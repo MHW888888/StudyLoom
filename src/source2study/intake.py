@@ -150,13 +150,17 @@ def _detected_assets(source: SourceRecord, evidence) -> DetectedAssets:
     ocr_regions = sum(1 for record in evidence if record.kind == "ocr" or record.metadata.get("ocr_confidence") is not None)
     transcript_segments = sum(1 for record in evidence if record.location.timestamp_start or record.source_type == "transcript")
     images = int(source.available_metadata.get("images_count") or screenshots)
+    tables = int(source.available_metadata.get("tables_count") or 0)
+    slides = int(source.available_metadata.get("slides_count") or 0)
+    speaker_notes = int(source.available_metadata.get("speaker_notes_count") or 0)
+    video_segments = int(source.available_metadata.get("video_segments_count") or 0)
     return DetectedAssets(
         text_blocks=text_blocks,
         images=images,
-        tables=0,
-        slides=0,
-        speaker_notes=0,
-        video_segments=0,
+        tables=tables,
+        slides=slides,
+        speaker_notes=speaker_notes,
+        video_segments=video_segments,
         transcript_segments=transcript_segments,
         screenshots=screenshots,
         ocr_regions=ocr_regions,
@@ -175,8 +179,8 @@ def _quality(source: SourceRecord, evidence, assets: DetectedAssets) -> Extracti
     return ExtractionQuality(
         text=text_quality,
         images="high" if assets.images or assets.screenshots else "not_supported",
-        tables="not_supported",
-        layout="medium" if source.source_type in {"webpage", "browser_capture", "document"} else "not_supported",
+        tables="medium" if assets.tables else "not_supported",
+        layout="medium" if source.source_type in {"webpage", "browser_capture", "document", "docx", "pptx"} else "not_supported",
         ocr=ocr_quality,
         transcript=transcript_quality,
     )

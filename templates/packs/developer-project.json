@@ -1,0 +1,10 @@
+{
+  "id": "developer-project",
+  "name": "Developer Project Pack",
+  "description": "Turn technical sources or repositories into project-oriented learning tasks, code maps, and debugging checkpoints.",
+  "use_case": "developer",
+  "mode": "developer",
+  "required_blocks": ["learning_map", "concept_card", "practice_task", "evidence_card", "source_appendix"],
+  "output_bias": ["repo_map", "minimal_demo", "implementation_task", "debug_checklist"],
+  "safety_notes": ["Do not claim repo behavior without file/path evidence.", "Preserve code file paths in citations."]
+}
