@@ -289,6 +289,22 @@ Before public sharing, use:
 
 `v1.0.0-alpha.0` is the Public Alpha baseline. `v1.5.0-alpha.0` is an Experimental Alpha Extensions release for testing the expanded DOCX/PPTX, Wiki/MindMap, browser capture, local OCR/ASR/keyframe, and template-pack surface.
 
+## Public Alpha Validation
+
+Real-world materials should start with `source2study inspect`. Do not skip degraded or failed intake reports; those statuses are the strongest signal that a generated pack may be incomplete.
+
+Use the validation flow in [docs/real-world-validation-results.md](docs/real-world-validation-results.md) for real Word, PPT, PDF, local video/audio, saved webpage, WeChat, Xiaohongshu, and Zhihu samples. Keep private files outside the repository and record anonymized results only. See [examples/real-world](examples/real-world) for the repository policy.
+
+During alpha:
+
+- complex Word/PPT/PDF/video outputs still require human review;
+- OCR, ASR, and video keyframes are optional local tools, not required cloud services;
+- `degraded` and `fail` results should be investigated before sharing outputs;
+- GitHub issues should not include sensitive source files, cookies, tokens, private course materials, browser profiles, API keys, or local private paths;
+- use [docs/public-alpha-triage.md](docs/public-alpha-triage.md) to classify source fidelity bugs, extraction degradation, citation grounding bugs, learning quality issues, output formatting bugs, template issues, OCR/ASR/keyframe issues, MCP safety issues, compliance concerns, and adapter requests.
+
+Suggested starter issues are listed in [docs/alpha-issue-seeds.md](docs/alpha-issue-seeds.md).
+
 ## Project Structure
 
 ```text

@@ -1,5 +1,25 @@
 # Changelog
 
+## v1.5.2-alpha.0 - Real-World Material Validation
+
+### Added
+
+- Public alpha real-world validation results template.
+- Real-world example policy that prevents private materials from entering the repository.
+- Public alpha triage guide for source fidelity, extraction, citation, learning quality, formatting, template, OCR/ASR/keyframe, MCP safety, compliance, and adapter request issues.
+- Alpha issue seed guide for organizing real-world validation work.
+
+### Hardened
+
+- README now has a Public Alpha Validation section.
+- README Chinese intro is checked for mojibake regressions.
+- Release docs tests now require the real-world validation and triage documents.
+
+### Safety
+
+- No new ingestion features or platform scraping.
+- Real-world validation records must stay anonymized and must not include private source files, cookies, tokens, browser profiles, API keys, or private course materials.
+
 ## v1.5.1-alpha.0 - Alpha Hardening
 
 ### Added

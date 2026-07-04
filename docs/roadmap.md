@@ -157,6 +157,14 @@ Current v1.0 alpha packages the pre-alpha work into a release-ready GitHub proje
 - Optional-tool degradation notes
 - Template-pack quality gate smoke tests
 
+### v1.5.2 Real-World Material Validation
+
+- Public alpha validation result template
+- Real-world example policy for keeping private files out of the repository
+- Issue triage categories and required reproduction information
+- Alpha issue seeds for DOCX/PPTX, PDF, media, browser capture, templates, and source fidelity regression tracking
+- No new platform adapters or ingestion features
+
 ## Future Milestones
 
 ### v1.6 Richer PDF / Typst / Pandoc Export

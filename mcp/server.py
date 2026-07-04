@@ -37,7 +37,7 @@ def handle_message(message: dict[str, Any]) -> dict[str, Any]:
             "result": {
                 "protocolVersion": "2025-06-18",
                 "capabilities": {"tools": {"listChanged": False}},
-                "serverInfo": {"name": "source2study", "version": "1.5.1a0"},
+                "serverInfo": {"name": "source2study", "version": "1.5.2a0"},
                 "instructions": INSTRUCTIONS,
             },
         }

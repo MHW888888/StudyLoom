@@ -7,7 +7,7 @@ class EvalTests(unittest.TestCase):
     def test_eval_report_schema_and_standard_metrics(self):
         report = run_suite("standard_demo")
         self.assertEqual(report["status"], "pass")
-        self.assertEqual(report["source2study_version"], "1.5.1a0")
+        self.assertEqual(report["source2study_version"], "1.5.2a0")
         self.assertEqual(report["suite"], "standard_demo")
         for key in [
             "intake_pass_rate",

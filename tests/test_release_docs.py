@@ -19,7 +19,11 @@ class ReleaseDocsTests(unittest.TestCase):
             "docs/real-world-fixture-checklist.md",
             "docs/alpha-risk-report.md",
             "docs/github-release-steps.md",
+            "docs/real-world-validation-results.md",
+            "docs/public-alpha-triage.md",
+            "docs/alpha-issue-seeds.md",
             "docs/release-notes/v1.5.1-alpha.md",
+            "examples/real-world/README.md",
             ".github/pull_request_template.md",
             ".github/ISSUE_TEMPLATE/bug_report.md",
             ".github/ISSUE_TEMPLATE/adapter_request.md",
@@ -39,12 +43,14 @@ class ReleaseDocsTests(unittest.TestCase):
             "Low-Risk Import Demo",
             "Personalized Learning Pack Demo",
             "MCP / Agent Tools",
+            "Public Alpha Validation",
             "Known Limitations",
             "License",
         ]:
             self.assertIn(phrase, text)
         self.assertIn("source2study 的第一步不是总结", text)
-        self.assertNotIn("\u9428", text)
+        for fragment in ["\u9428", "\u6d93", "\ufffd"]:
+            self.assertNotIn(fragment, text)
 
     def test_hardening_docs_name_real_world_alpha_risks(self):
         checklist = (ROOT / "docs" / "real-world-fixture-checklist.md").read_text(encoding="utf-8")
@@ -56,6 +62,17 @@ class ReleaseDocsTests(unittest.TestCase):
         release_steps = (ROOT / "docs" / "github-release-steps.md").read_text(encoding="utf-8")
         self.assertIn("v1.0.0-alpha.0", release_steps)
         self.assertIn("v1.5.0-alpha.0", release_steps)
+
+    def test_public_alpha_validation_docs_define_triage_without_private_materials(self):
+        validation = (ROOT / "docs" / "real-world-validation-results.md").read_text(encoding="utf-8")
+        for phrase in ["Material type", "Intake status", "Human review notes", "Issue category"]:
+            self.assertIn(phrase, validation)
+        triage = (ROOT / "docs" / "public-alpha-triage.md").read_text(encoding="utf-8")
+        for phrase in ["source fidelity bug", "citation grounding bug", "MCP safety issue", "compliance concern"]:
+            self.assertIn(phrase.lower(), triage.lower())
+        examples_policy = (ROOT / "examples" / "real-world" / "README.md").read_text(encoding="utf-8")
+        for phrase in ["Do not commit", "cookies", "tokens", "synthetic fixture"]:
+            self.assertIn(phrase, examples_policy)
 
     def test_adapter_request_rejects_high_risk_methods(self):
         text = (ROOT / ".github" / "ISSUE_TEMPLATE" / "adapter_request.md").read_text(encoding="utf-8").lower()
