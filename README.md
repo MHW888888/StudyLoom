@@ -258,6 +258,12 @@ python -m venv .venv
 pip install -e .
 ```
 
+Optional local tools are never required for the base CLI, demos, tests, or eval suites:
+
+- Tesseract can improve local screenshot OCR, but sidecar text and low-confidence placeholders keep the workflow usable when it is missing.
+- Whisper CLI can transcribe user-provided local media, but missing Whisper returns a structured `unavailable` result instead of failing the base workflow.
+- ffmpeg can extract local interval keyframes, but missing ffmpeg returns a structured `unavailable` result instead of downloading platform videos.
+
 Use quoted paths when directories contain spaces:
 
 ```bash
@@ -271,6 +277,17 @@ Remove-Item -Recurse -Force .\workspace, .\tmp, .\.source2study -ErrorAction Sil
 ```
 
 Do not commit runtime workspaces or caches.
+
+## Release Validation
+
+Before public sharing, use:
+
+- [docs/fresh-clone-validation.md](docs/fresh-clone-validation.md)
+- [docs/real-world-fixture-checklist.md](docs/real-world-fixture-checklist.md)
+- [docs/alpha-risk-report.md](docs/alpha-risk-report.md)
+- [docs/github-release-steps.md](docs/github-release-steps.md)
+
+`v1.0.0-alpha.0` is the Public Alpha baseline. `v1.5.0-alpha.0` is an Experimental Alpha Extensions release for testing the expanded DOCX/PPTX, Wiki/MindMap, browser capture, local OCR/ASR/keyframe, and template-pack surface.
 
 ## Project Structure
 

@@ -1,6 +1,6 @@
 {
   "status": "pass",
-  "source2study_version": "1.5.0a0",
+  "source2study_version": "1.5.1a0",
   "suite": "personalized_demo",
   "metrics": {
     "intake_pass_rate": 1.0,

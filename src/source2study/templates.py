@@ -60,7 +60,19 @@ def _readme(pack: dict[str, Any]) -> str:
         "",
     ]
     lines.extend(f"- `{block}`" for block in pack.get("required_blocks", []))
-    lines.extend(["", "## Safety Notes", ""])
+    lines.extend(
+        [
+            "",
+            "## Required Quality Gates",
+            "",
+            "- Include `Source Intake Summary` so readers can see extraction status and warnings.",
+            "- Include `Source Appendix` so every pack stays audit-ready.",
+            "- Run citation validation before sharing the generated pack.",
+            "",
+            "## Safety Notes",
+            "",
+        ]
+    )
     lines.extend(f"- {note}" for note in pack.get("safety_notes", []))
     lines.append("")
     return "\n".join(lines)

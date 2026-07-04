@@ -15,6 +15,11 @@ class ReleaseDocsTests(unittest.TestCase):
             "SECURITY.md",
             "CODE_OF_CONDUCT.md",
             "docs/release-checklist.md",
+            "docs/fresh-clone-validation.md",
+            "docs/real-world-fixture-checklist.md",
+            "docs/alpha-risk-report.md",
+            "docs/github-release-steps.md",
+            "docs/release-notes/v1.5.1-alpha.md",
             ".github/pull_request_template.md",
             ".github/ISSUE_TEMPLATE/bug_report.md",
             ".github/ISSUE_TEMPLATE/adapter_request.md",
@@ -38,6 +43,19 @@ class ReleaseDocsTests(unittest.TestCase):
             "License",
         ]:
             self.assertIn(phrase, text)
+        self.assertIn("source2study 的第一步不是总结", text)
+        self.assertNotIn("\u9428", text)
+
+    def test_hardening_docs_name_real_world_alpha_risks(self):
+        checklist = (ROOT / "docs" / "real-world-fixture-checklist.md").read_text(encoding="utf-8")
+        for phrase in ["Word / DOCX", "PowerPoint / PPTX", "WeChat Public Article", "Xiaohongshu", "Zhihu"]:
+            self.assertIn(phrase, checklist)
+        risk_report = (ROOT / "docs" / "alpha-risk-report.md").read_text(encoding="utf-8")
+        for phrase in ["DOCX / PPTX Complex Structure", "OCR / ASR Tool Availability", "Eval Metrics Are Rule-Based"]:
+            self.assertIn(phrase, risk_report)
+        release_steps = (ROOT / "docs" / "github-release-steps.md").read_text(encoding="utf-8")
+        self.assertIn("v1.0.0-alpha.0", release_steps)
+        self.assertIn("v1.5.0-alpha.0", release_steps)
 
     def test_adapter_request_rejects_high_risk_methods(self):
         text = (ROOT / ".github" / "ISSUE_TEMPLATE" / "adapter_request.md").read_text(encoding="utf-8").lower()

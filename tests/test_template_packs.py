@@ -20,8 +20,12 @@ class TemplatePackTests(unittest.TestCase):
             target = copy_template_pack("developer-project", workspace)
             pack = load_template_pack("developer-project")
             self.assertEqual(pack["mode"], "developer")
+            readme_path = target / "README.md"
             self.assertTrue((target / "pack.json").exists())
-            self.assertTrue((target / "README.md").exists())
+            self.assertTrue(readme_path.exists())
+            readme = readme_path.read_text(encoding="utf-8")
+            self.assertIn("Source Intake Summary", readme)
+            self.assertIn("Source Appendix", readme)
 
     def test_cli_templates_list_show_and_copy_all(self):
         with tempfile.TemporaryDirectory() as tmp:

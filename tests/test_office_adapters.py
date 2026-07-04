@@ -53,6 +53,7 @@ class OfficeAdapterTests(unittest.TestCase):
         self.assertEqual(source["source_type"], "pptx")
         self.assertEqual(source["detected_assets"]["slides"], 2)
         self.assertEqual(source["detected_assets"]["speaker_notes"], 1)
+        self.assertGreaterEqual(len(source["warnings"]), 1)
 
 
 def _write_minimal_docx(path: Path) -> None:

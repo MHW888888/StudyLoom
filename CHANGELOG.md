@@ -1,6 +1,27 @@
 # Changelog
 
+## v1.5.1-alpha.0 - Alpha Hardening
+
+### Added
+
+- Fresh clone validation checklist for proving the GitHub repository works outside the original workspace.
+- Real-world fixture checklist for Word, PPT, PDF, local media, WeChat, Xiaohongshu, and Zhihu alpha testing.
+- Alpha risk report for DOCX/PPTX complexity, optional OCR/ASR/keyframes, browser capture compatibility, template quality, and deterministic eval limits.
+- GitHub release steps for publishing `v1.0.0-alpha.0` as the baseline and `v1.5.0-alpha.0` as experimental extensions.
+
+### Hardened
+
+- README now documents optional local-tool degradation for Tesseract, Whisper CLI, and ffmpeg.
+- Template-pack exported READMEs now explicitly require `Source Intake Summary`, `Source Appendix`, and citation validation.
+
+### Safety
+
+- No new platform scraping or high-risk adapter work.
+- Optional media helpers remain local-only and explicit.
+
 ## v1.5.0-alpha.0 - Alpha Extension Line
+
+Experimental alpha extension release. Use `v1.0.0-alpha.0` as the public baseline; use this line for testing the expanded local extraction and output capabilities.
 
 ### Added
 

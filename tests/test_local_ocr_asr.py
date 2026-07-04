@@ -1,11 +1,12 @@
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from source2study.asr.local import inspect_local_asr, run_local_asr
 from source2study.cli import main
 from source2study.ocr.simple_placeholder import read_sidecar_or_placeholder
-from source2study.video.keyframes import inspect_keyframe_engine
+from source2study.video.keyframes import extract_interval_keyframes, inspect_keyframe_engine
 
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -32,21 +33,39 @@ class LocalOcrAsrTests(unittest.TestCase):
         self.assertIn("optional", status["note"].lower())
 
     def test_asr_unavailable_returns_structured_result(self):
-        if inspect_local_asr()["available"]:
-            self.skipTest("Local whisper CLI is installed; unavailable path is environment-dependent.")
         with tempfile.TemporaryDirectory() as tmp:
             media = Path(tmp) / "sample.wav"
             media.write_bytes(b"not real audio")
-            result = run_local_asr(media)
+            with patch("source2study.asr.local.shutil.which", return_value=None):
+                result = run_local_asr(media)
         self.assertEqual(result.status, "unavailable")
         self.assertEqual(result.engine, "unavailable")
         self.assertGreaterEqual(len(result.warnings), 1)
+
+    def test_ocr_missing_optional_engine_returns_low_confidence_placeholder(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            image = Path(tmp) / "slide.png"
+            image.write_bytes(b"not real image")
+            with patch("source2study.ocr.simple_placeholder.run_tesseract_if_available", return_value=None):
+                result = read_sidecar_or_placeholder(image)
+        self.assertEqual(result.engine, "placeholder")
+        self.assertLess(result.confidence, 0.5)
 
     def test_keyframe_inspect_is_local_optional(self):
         status = inspect_keyframe_engine()
         self.assertIn("available", status)
         self.assertIn("engine", status)
         self.assertIn("local-only", status["note"])
+
+    def test_keyframe_missing_optional_engine_returns_unavailable(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            media = Path(tmp) / "sample.mp4"
+            media.write_bytes(b"not real video")
+            with patch("source2study.video.keyframes.shutil.which", return_value=None):
+                result = extract_interval_keyframes(media, Path(tmp) / "frames")
+        self.assertEqual(result.status, "unavailable")
+        self.assertEqual(result.engine, "unavailable")
+        self.assertGreaterEqual(len(result.warnings), 1)
 
 
 if __name__ == "__main__":

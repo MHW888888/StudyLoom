@@ -148,6 +148,15 @@ Current v1.0 alpha packages the pre-alpha work into a release-ready GitHub proje
 - Enterprise training pack
 - Template pack CLI list/show/copy
 
+### v1.5.1 Alpha Hardening
+
+- Fresh clone validation checklist
+- Real-world fixture checklist
+- Alpha risk report
+- GitHub release steps for baseline and experimental alpha tags
+- Optional-tool degradation notes
+- Template-pack quality gate smoke tests
+
 ## Future Milestones
 
 ### v1.6 Richer PDF / Typst / Pandoc Export
