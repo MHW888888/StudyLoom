@@ -1,0 +1,7 @@
+persona: research
+tone: careful and comparative
+required_blocks:
+  - concept_card
+  - evidence_card
+  - source_comparison
+  - source_appendix

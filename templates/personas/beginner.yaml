@@ -1,0 +1,9 @@
+persona: beginner
+tone: clear and encouraging
+required_blocks:
+  - learning_map
+  - prerequisite_patch
+  - concept_card
+  - quiz_block
+  - practice_task
+  - source_appendix

@@ -1,0 +1,6 @@
+block: quiz_block
+purpose: Add retrieval practice and self-check questions.
+fields:
+  - question
+  - answer_hint
+  - evidence_id

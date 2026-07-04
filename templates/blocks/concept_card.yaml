@@ -1,0 +1,9 @@
+block: concept_card
+purpose: Explain one concept with prerequisites, misconception, example, and evidence.
+fields:
+  - concept
+  - importance
+  - difficulty
+  - prerequisites
+  - common_misconceptions
+  - evidence_ids

@@ -1,0 +1,15 @@
+name: basic_docx_learning_pack
+status: implemented
+purpose: Dependency-free DOCX renderer for smoke tests and lightweight sharing.
+required_features:
+  - title_style
+  - heading_levels
+  - table_of_contents_placeholder
+  - source_appendix
+  - citation_cards
+  - concept_card_paragraphs
+  - quiz_block_paragraphs
+limits:
+  - No advanced page layout.
+  - No generated Word field table of contents yet.
+  - Production Chinese typography is a future premium renderer target.

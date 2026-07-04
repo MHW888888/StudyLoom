@@ -1,0 +1,10 @@
+{
+  "goal": "Understand gradient descent from zero and complete a tiny project",
+  "current_level": "beginner",
+  "time_budget": "3 hours",
+  "preferred_style": "plain explanation, examples, and small exercises",
+  "use_case": "self_study",
+  "domain_background": ["basic Python", "high-school math"],
+  "avoid": ["too many formulas"],
+  "must_include": ["prerequisites", "common misconceptions", "practice task"]
+}

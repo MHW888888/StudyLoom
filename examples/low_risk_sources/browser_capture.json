@@ -1,0 +1,13 @@
+{
+  "source_type": "browser_capture",
+  "platform": "wechat",
+  "title": "Browser Capture Example",
+  "author": "Demo Teacher",
+  "published_at": "2026-07-04",
+  "url": "https://mp.weixin.qq.com/s/current-page-example",
+  "content_html": "<article><p>The browser extension exports only the current page.</p><p>It must not export cookies, private headers, tokens, storage, or history.</p></article>",
+  "text": "The browser extension exports only the current page.\n\nIt must not export cookies, private headers, tokens, storage, or history.",
+  "images": [],
+  "capture_method": "current_page_dom",
+  "user_initiated_capture": true
+}

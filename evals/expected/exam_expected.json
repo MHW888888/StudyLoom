@@ -1,0 +1,18 @@
+{
+  "mode": "exam",
+  "required_sections": ["Source Intake Summary", "Learning Map", "High-Frequency Concepts", "Checkpoint Quiz", "Source Appendix"],
+  "required_concepts": ["gradient descent", "learning rate", "loss function"],
+  "required_blocks": ["quiz_block", "misconception_box"],
+  "expected_assets": {
+    "text_blocks": true,
+    "images": false,
+    "transcript_segments": false
+  },
+  "forbidden_patterns": ["cookie replay", "login bypass", "paywall bypass", "DRM bypass", "anti-bot bypass", "signature reverse engineering"],
+  "min_citation_coverage": 0.9,
+  "max_low_confidence_evidence_rate": 0.2,
+  "requires_quiz": true,
+  "requires_practice_task": false,
+  "requires_source_appendix": true,
+  "requires_intake_summary": true
+}

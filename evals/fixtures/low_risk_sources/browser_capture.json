@@ -1,0 +1,13 @@
+{
+  "source_type": "browser_capture",
+  "platform": "wechat",
+  "title": "Browser Capture Note",
+  "author": "Source2Study fixture",
+  "published_at": "2026-07-04",
+  "url": "https://example.test/browser-capture-note",
+  "text": "A browser capture should include visible page text, source URL, capture method, and no cookies or headers.",
+  "content_html": "",
+  "images": [],
+  "capture_method": "current_page_dom",
+  "user_initiated_capture": true
+}

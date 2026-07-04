@@ -1,0 +1,22 @@
+{
+  "mode": "beginner",
+  "required_sections": ["Source Intake Summary", "Learning Map", "Concept Cards", "Checkpoint Quiz", "Practice Task", "Source Appendix"],
+  "required_concepts": ["gradient descent", "learning rate", "loss function"],
+  "required_blocks": ["quiz_block", "practice_task"],
+  "expected_assets": {
+    "text_blocks": true,
+    "images": false,
+    "tables": false,
+    "slides": false,
+    "transcript_segments": false,
+    "screenshots": false,
+    "speaker_notes": false
+  },
+  "forbidden_patterns": ["cookie replay", "login bypass", "paywall bypass", "DRM bypass", "anti-bot bypass", "signature reverse engineering"],
+  "min_citation_coverage": 0.9,
+  "max_low_confidence_evidence_rate": 0.2,
+  "requires_quiz": true,
+  "requires_practice_task": true,
+  "requires_source_appendix": true,
+  "requires_intake_summary": true
+}

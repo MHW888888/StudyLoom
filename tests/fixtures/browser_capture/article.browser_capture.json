@@ -1,0 +1,13 @@
+{
+  "source_type": "browser_capture",
+  "platform": "wechat",
+  "title": "Browser Captured Study Article",
+  "author": "Demo Author",
+  "published_at": "2026-07-04",
+  "url": "https://mp.weixin.qq.com/s/demo-current-page",
+  "content_html": "<article><p>Browser capture imports only the current visible page.</p><p>The exported JSON must not include cookies, headers, tokens, or history lists.</p></article>",
+  "text": "Browser capture imports only the current visible page.\n\nThe exported JSON must not include cookies, headers, tokens, or history lists.",
+  "images": [],
+  "capture_method": "current_page_dom",
+  "user_initiated_capture": true
+}

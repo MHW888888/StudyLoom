@@ -1,0 +1,8 @@
+{
+  "goal": "Turn gradient descent into a short teaching script",
+  "current_level": "intermediate",
+  "time_budget": "1 hour",
+  "preferred_style": "engaging hook, storyline, audience questions",
+  "use_case": "creator",
+  "must_include": ["opening hook", "audience questions", "source appendix"]
+}

@@ -1,0 +1,8 @@
+persona: exam
+tone: precise and exam-oriented
+required_blocks:
+  - concept_card
+  - misconception_box
+  - quiz_block
+  - summary_sheet
+  - source_appendix

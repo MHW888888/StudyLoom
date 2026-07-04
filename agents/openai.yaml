@@ -1,0 +1,14 @@
+interface:
+  display_name: "Source2Study"
+  short_description: "Generate source-grounded personalized learning packs from allowlisted local sources."
+  default_prompt: "Use Source2Study with Source Fidelity First: inspect, ingest local sources, build the evidence index, generate, validate, and eval."
+
+policy:
+  allow_implicit_invocation: false
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "source2study"
+      description: "Restricted Source2Study MCP tools for policy, inspect, ingest, generate, validate, and eval."
+      transport: "stdio"

@@ -1,0 +1,8 @@
+{
+  "goal": "Review gradient descent for an interview",
+  "current_level": "intermediate",
+  "time_budget": "45 minutes",
+  "preferred_style": "definitions, traps, and self-check questions",
+  "use_case": "exam",
+  "must_include": ["high-frequency concepts", "traps", "quiz"]
+}

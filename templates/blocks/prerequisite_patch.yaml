@@ -1,0 +1,6 @@
+block: prerequisite_patch
+purpose: Repair missing background before the main explanation.
+fields:
+  - prerequisite
+  - why_it_matters
+  - quick_explanation

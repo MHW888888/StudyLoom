@@ -1,0 +1,7 @@
+1
+00:00:01,000 --> 00:00:04,000
+This course subtitle was uploaded by the user for local learning.
+
+2
+00:00:05,000 --> 00:00:09,000
+No video download or ASR is required for this low-risk import path.

@@ -1,0 +1,12 @@
+name: basic_pdf_learning_pack
+status: implemented
+purpose: Minimal PDF smoke renderer with Markdown sidecar.
+required_features:
+  - pdf_header
+  - same_name_markdown_sidecar
+  - source_appendix_text
+  - citation_cards_text
+limits:
+  - Uses PDF core fonts only.
+  - Non-Latin glyphs may be replaced.
+  - Production Chinese PDF should use Pandoc, Typst, or a later rich renderer.

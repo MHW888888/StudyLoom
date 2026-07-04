@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Source2Study Current Page Export",
+  "version": "0.4.0",
+  "description": "Export only the currently visible page as Source2Study browser_capture JSON.",
+  "permissions": ["activeTab", "downloads"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_title": "Export current page to Source2Study"
+  },
+  "background": {
+    "service_worker": "export-current-page.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-script.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+interface:
+  display_name: "Source2Study"
+  short_description: "Source-grounded personalized learning-pack workflow with strict local-only agent tools."
+  default_prompt: "Run Source2Study through restricted tools only; preserve source fidelity and run verifiers."
+
+policy:
+  allow_implicit_invocation: false
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "source2study"
+      description: "Restricted local MCP surface; no cookies, shell, arbitrary paths, or crawling."
+      transport: "stdio"

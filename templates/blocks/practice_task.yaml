@@ -1,0 +1,7 @@
+block: practice_task
+purpose: Convert learning into an action with an observable result.
+fields:
+  - task
+  - expected_output
+  - check
+  - evidence_ids

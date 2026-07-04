@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:01.000 --> 00:00:05.000
+Gradient descent starts with a guess and improves it using the gradient.
+
+00:00:06.000 --> 00:00:11.000
+The learning rate decides how far to move at each step.

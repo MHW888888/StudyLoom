@@ -1,0 +1,20 @@
+{
+  "mode": "beginner",
+  "required_sections": ["Source Intake Summary", "Extraction Warnings", "Low Confidence Evidence", "Source Appendix"],
+  "required_concepts": ["ocr text"],
+  "required_blocks": ["intake_summary", "source_appendix"],
+  "expected_assets": {
+    "text_blocks": true,
+    "images": true,
+    "screenshots": true,
+    "ocr_regions": true
+  },
+  "forbidden_patterns": ["cookie replay", "login bypass", "paywall bypass", "DRM bypass", "anti-bot bypass", "signature reverse engineering"],
+  "min_citation_coverage": 0.9,
+  "max_low_confidence_evidence_rate": 1.0,
+  "requires_quiz": true,
+  "requires_practice_task": true,
+  "requires_source_appendix": true,
+  "requires_intake_summary": true,
+  "expects_degraded": true
+}

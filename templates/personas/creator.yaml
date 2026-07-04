@@ -1,0 +1,8 @@
+persona: creator
+tone: engaging and audience-aware
+required_blocks:
+  - opening_hook
+  - learning_map
+  - concept_card
+  - evidence_card
+  - source_appendix

@@ -1,0 +1,8 @@
+{
+  "goal": "Implement a minimal gradient descent demo in Python",
+  "current_level": "intermediate",
+  "time_budget": "2 hours",
+  "preferred_style": "code path, API thinking, debug checklist",
+  "use_case": "developer",
+  "must_include": ["practice task", "debug checklist", "source appendix"]
+}

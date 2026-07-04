@@ -1,0 +1,8 @@
+{
+  "title": "Mock Xiaohongshu Visual Note",
+  "author": "demo-user",
+  "source_url": "https://example.invalid/xhs/mock-note",
+  "content": "This user export describes how a screenshot can support a concept when text alone is incomplete.",
+  "tags": ["study", "evidence"],
+  "ocr_placeholder": "OCR placeholder: diagram shows source, evidence index, and generated study pack."
+}

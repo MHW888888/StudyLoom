@@ -1,0 +1,9 @@
+persona: teacher
+tone: instructional and classroom-ready
+required_blocks:
+  - learning_map
+  - prerequisite_patch
+  - concept_card
+  - quiz_block
+  - practice_task
+  - source_appendix

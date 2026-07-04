@@ -1,0 +1,1 @@
+Diagram text: low-risk ingestion connects user export, browser capture, OCR, transcript import, and EvidenceIndex.

@@ -1,0 +1,9 @@
+{
+  "source_type": "browser_capture",
+  "platform": "wechat",
+  "title": "Bad Browser Capture",
+  "url": "https://mp.weixin.qq.com/s/bad",
+  "text": "This file should be rejected because it includes session data.",
+  "capture_method": "current_page_dom",
+  "cookies": "session=do-not-store"
+}

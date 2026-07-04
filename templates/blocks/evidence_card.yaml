@@ -1,0 +1,8 @@
+block: evidence_card
+purpose: Keep generated explanations auditable.
+fields:
+  - evidence_id
+  - source_id
+  - location
+  - excerpt
+  - confidence

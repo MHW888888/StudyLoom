@@ -1,0 +1,7 @@
+block: learning_map
+purpose: Show the learner the route before detailed reading.
+fields:
+  - module_order
+  - concept
+  - importance
+  - difficulty

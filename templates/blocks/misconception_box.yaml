@@ -1,0 +1,6 @@
+block: misconception_box
+purpose: Show common traps and how to avoid them.
+fields:
+  - concept
+  - misconception
+  - correction

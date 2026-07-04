@@ -1,0 +1,21 @@
+name: markdown_learning_pack
+status: implemented
+purpose: Primary Unicode-safe source document for study packs.
+required_sections:
+  - cover
+  - table_of_contents
+  - learning_goals
+  - learning_map
+  - study_sections
+  - one_page_review
+  - source_appendix
+block_support:
+  - chapter_objective
+  - concept_card
+  - misconception_box
+  - quiz_block
+  - practice_task
+  - citation_card
+notes:
+  - Markdown is the source of truth for DOCX/PDF conversion.
+  - Keep citations visible near section content and again in the appendix.

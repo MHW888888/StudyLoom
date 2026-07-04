@@ -1,0 +1,18 @@
+{
+  "mode": "creator",
+  "required_sections": ["Source Intake Summary", "Opening Hook", "Learning Map", "Concept Cards", "Storyline And Examples", "Source Appendix"],
+  "required_concepts": ["gradient descent", "learning rate", "loss function"],
+  "required_blocks": ["opening_hook", "evidence_card"],
+  "expected_assets": {
+    "text_blocks": true,
+    "images": false,
+    "transcript_segments": false
+  },
+  "forbidden_patterns": ["cookie replay", "login bypass", "paywall bypass", "DRM bypass", "anti-bot bypass", "signature reverse engineering"],
+  "min_citation_coverage": 0.9,
+  "max_low_confidence_evidence_rate": 0.2,
+  "requires_quiz": false,
+  "requires_practice_task": false,
+  "requires_source_appendix": true,
+  "requires_intake_summary": true
+}

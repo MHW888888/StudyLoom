@@ -1,0 +1,28 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+dist/
+build/
+
+# Runtime workspaces and caches
+.source2study/
+workspace/
+workspaces/
+work/
+examples/workspace/
+tmp/
+temp/
+outputs/tmp/
+eval_report.json
+
+# Local secrets and machine noise
+.env
+*.log
+.DS_Store
+
+# Keep curated release samples.
+!examples/outputs/
+!examples/outputs/**

@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:01.000 --> 00:00:05.000
+Gradient descent starts from an initial parameter value and repeatedly improves it.
+
+00:00:06.000 --> 00:00:12.000
+The update direction is based on the gradient of the loss function.

@@ -1,0 +1,8 @@
+{
+  "title": "Xiaohongshu JSON Export Example",
+  "author": "demo-user",
+  "source_url": "https://example.invalid/xhs/export",
+  "content": "JSON export keeps title, author, source link, and note text without replaying app sessions.",
+  "tags": ["low-risk", "study-pack"],
+  "ocr_placeholder": "Screenshot cue: exported images can be paired with OCR text when authorized."
+}

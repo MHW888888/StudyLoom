@@ -1,0 +1,12 @@
+{
+  "source_type": "browser_capture",
+  "platform": "wechat",
+  "title": "Bad Bulk Capture",
+  "url": "https://mp.weixin.qq.com/s/bulk",
+  "text": "This file should be rejected because it contains multiple captured pages.",
+  "capture_method": "current_page_dom",
+  "captures": [
+    {"title": "Page One"},
+    {"title": "Page Two"}
+  ]
+}
